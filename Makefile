@@ -1,20 +1,23 @@
 CC=gcc
+LD=gcc
+CFLAGS=-ggdb -Wall -pedantic -std=c99 -D_GNU_SOURCE -O3
+LDFLAGS=
 
-CFLAGS=-Wall -Wextra --pedantic
+prog_1=matrix_mul
+prog_2=matrix_trans
 
-SRC=cache.cpp
+PROGS=$(prog_1) $(prog_2) 
 
-OBJ=$(SRC:.cpp=.o)
+all: $(PROGS)
 
-EXEC=cacheSim
+part_C_1: $(prog_1)
+	$(CC) -o $(prog_1) $(CFLAGS) $(prog_1).c
+	./$(prog_1)
 
-all: $(EXEC)
+part_C_2: $(prog_2)
+	$(CC) -o $(prog_2) $(CFLAGS) $(prog_2).c
+	./$(prog_2)	
 
-$(EXEC): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(EXEC) -lstdc++
+clean: 
+	-rm -rf core *.o *~ "#"*"#" Makefile.bak $(PROGS) *.dSYM
 
-.cpp.o:
-	$(CC) $(CFLAGS) -c $< -o $@
-
-clean:
-	rm -f $(EXEC) $(OBJ) *.o
